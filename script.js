@@ -74,23 +74,31 @@ function _drawHexBoard($hexRow, col, row) {
 
 function mouseClickEvent(event) {
     const $hexTile = $(event.currentTarget);
-    const hexTileId = $hexTile[0].id;
-
     switch (event.which) {
         case 1:
-            alert(`Clicou em ${hexTileId}`);
+            selectHexTile($hexTile);
             break;
         case 3:
-            toogleFlag($hexTile);
+            toogleFlaggedHexTile($hexTile);
             break;
     }
 }
 
-function toogleFlag($hexTile) {
+function selectHexTile($hexTile) {
+    const hasNoFlag = !($hexTile.find(".middle").text() == "🚩");
+    if(hasNoFlag){
+        $hexTile.children().addClass("selected");
+    }
+}
+
+function toogleFlaggedHexTile($hexTile) {
     const hasFlag = !!($hexTile.find(".middle").text() == "🚩");
+    const isNotSelected = !($hexTile.children().hasClass("selected"));
     if(hasFlag){
         $hexTile.find(".middle").text("");
-    }else{
+        $hexTile.children().removeClass("flagged");
+    }else if(isNotSelected){
         $hexTile.find(".middle").text("🚩");
+        $hexTile.children().addClass("flagged");
     }
 }

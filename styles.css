@@ -11,11 +11,14 @@ body {
     --hex-font-size: 1.35rem;
 
     --color-primary: rgb(34, 87, 210);
+    --color-selected: #fcae11;
+    --color-flagged: #444444;
 
     margin: 0px;
+    color: white;
     font-size: 22px;
     font-family: 'pixelFont';
-    background-color: antiquewhite;
+    background-color: #24233f;
 }
 
 #container {
@@ -92,6 +95,14 @@ body {
     background-color: var(--color-primary);
 }
 
+.hex .middle.flagged {
+    background-color: var(--color-flagged);
+}
+
+.hex .middle.selected {
+    background-color: var(--color-selected);
+}
+
 .hex .bottom, .hex .top {
     width: 0;
     border-left: var(--hex-half-width) solid transparent;
@@ -102,8 +113,24 @@ body {
     border-bottom: var(--hex-half-height) solid var(--color-primary);
 }
 
+.hex .top.flagged {
+    border-bottom-color: var(--color-flagged);
+}
+
+.hex .top.selected {
+    border-bottom-color: var(--color-selected);
+}
+
 .hex .bottom {
     border-top: var(--hex-half-height) solid var(--color-primary);
+}
+
+.hex .bottom.flagged {
+    border-top-color: var(--color-flagged);
+}
+
+.hex .bottom.selected {
+    border-top-color: var(--color-selected);
 }
 
 .hex-row {

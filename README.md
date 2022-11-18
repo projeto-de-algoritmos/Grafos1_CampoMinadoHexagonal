@@ -1,13 +1,13 @@
-# Campo Minado
+# Campo Minado Hexagonal
 
-**Número da Lista**: X<br>
-**Conteúdo da Disciplina**: Grafos<br>
+**Número da Lista**: 36<br>
+**Conteúdo da Disciplina**: Grafos 1<br>
 
 ## Alunos
-| Matrícula | Aluno           |
-| --------- | --------------- |
-| 170144488 | Henrique Melo   |
-| xx/xxxxxx | xxxx xxxx xxxxx |
+| Matrícula | Aluno                                                       |
+| --------- | ----------------------------------------------------------- |
+| 170144488 | [Henrique Melo](https://github.com/HenriqueAmorim20)        |
+| 180122258 | [Igor Queiroz Lima](https://github.com/igorq937)            |
 
 ## Sobre
 Descreva os objetivos do seu projeto e como ele funciona. 
