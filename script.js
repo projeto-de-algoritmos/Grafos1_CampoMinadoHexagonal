@@ -1,5 +1,8 @@
-const boardWidth = 10;
-const boardHeight = 9;
+const difficulties = [
+    { id: 'facil', boardWidth: 6, boardHeight: 5 },
+    { id: 'media', boardWidth: 10, boardHeight: 9 },
+    { id: 'dificil', boardWidth: 15, boardHeight: 13 },
+];
 
 window.onload = () => {
     window.addEventListener("contextmenu", e => e.preventDefault());
@@ -7,13 +10,43 @@ window.onload = () => {
 }
 
 function startGame() {
-    drawBoard();
+    listenToDifficulty();
+    checkDifficulty();
 }
 
-function drawBoard() {
-    for(let i = 0; i < boardHeight; i++){
+function checkDifficulty() {
+    const savedDifficulty = window.localStorage.getItem("difficulty");
+    const selectedDifficulty = savedDifficulty ?? 'facil';
+    difficulties.forEach(difficulty => {
+        const element = document.getElementById(difficulty.id);
+        if (difficulty.id === selectedDifficulty) {
+            element.classList.add('option-active');
+            drawBoard(difficulty);
+        }
+        else element.classList.remove('option-active');
+    })
+}
+
+function listenToDifficulty() {
+    difficulties.forEach(difficulty => {
+        const element = document.getElementById(difficulty.id)
+        element.addEventListener("click", () => {
+            const response = window.confirm("Alterar a dificuldade reinicia o jogo. Deseja prosseguir?")
+            if (response) {
+                window.localStorage.setItem("difficulty", difficulty.id);
+                checkDifficulty();
+            }
+        });
+    });
+}
+
+function drawBoard(difficulty) {
+    const container = document.getElementById("board");
+    container.replaceChildren();
+
+    for(let i = 0; i < difficulty.boardHeight; i++){
         const $hexRow = $("<div></div>").addClass("hex-row")
-        let cont = boardWidth;
+        let cont = difficulty.boardWidth;
         if(i%2 == 0) {
             $hexRow.addClass("even");
             cont--;
@@ -26,7 +59,6 @@ function drawBoard() {
 }
 
 function _drawHexBoard($hexRow, col, row) {
-    
     const $hex = $("<div></div>").attr("id", `${row}-${col}`);
     $hex.addClass("hex");
     $hex.mousedown((event) => { mouseClickEvent(event) });
