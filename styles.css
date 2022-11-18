@@ -23,6 +23,7 @@ body {
 }
 
 .hex {
+    cursor: pointer;
     float: left;
     margin-left: 3px;
     margin-bottom: calc(var(--hex-half-height) * -1 + 3px);
