@@ -26,14 +26,6 @@ body {
     align-items: center;
 }
 
-.header {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 4rem;
-}
-
 .title {
     font-size: 3rem;
     margin-bottom: 1.5rem;
@@ -52,7 +44,7 @@ body {
 .options {
     display: flex;
     justify-content: space-between;
-    margin-top: 1rem;
+    margin: 1rem 0 3rem;
 }
 
 .option {
