@@ -1,4 +1,12 @@
 body {
+    --hex-width: 60px;
+    --hex-height: 34px; 
+    --hex-half-width: calc(var(--hex-width)/2);
+    --hex-half-height: calc(var(--hex-height)/2);
+    --hex-font-size: 1.8rem;
+
+    --color-primary: rgb(34, 87, 210);
+
     margin: 0px;
     font-size: 22px;
     font-family: 'Roboto';
@@ -12,4 +20,41 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.hex {
+    float: left;
+    margin-left: 3px;
+    margin-bottom: calc(var(--hex-half-height) * -1 + 3px);
+}
+
+.hex .middle {
+    font-size: var(--hex-font-size);
+    font-weight: 600;
+    text-align: center;
+    width: var(--hex-width);
+    height: var(--hex-height);
+    background-color: var(--color-primary);
+}
+
+.hex .bottom, .hex .top {
+    width: 0;
+    border-left: var(--hex-half-width) solid transparent;
+    border-right: var(--hex-half-width) solid transparent;
+}
+
+.hex .top {
+    border-bottom: var(--hex-half-height) solid var(--color-primary);
+}
+
+.hex .bottom {
+    border-top: var(--hex-half-height) solid var(--color-primary);
+}
+
+.hex-row {
+    clear: left;
+}
+
+.hex-row.even {
+    margin-left: calc(var(--hex-half-width) + 1px);
 }
