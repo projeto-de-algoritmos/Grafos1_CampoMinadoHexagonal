@@ -6,6 +6,10 @@ const difficulties = [
 
 let bombs = [];
 
+let timer;
+
+let isGameRunning = false;
+
 window.onload = () => {
     window.addEventListener("contextmenu", e => e.preventDefault());
     startGame();
@@ -14,6 +18,7 @@ window.onload = () => {
 function startGame() {
     listenToDifficulty();
     checkDifficulty();
+    listenToRestart();
 }
 
 function checkDifficulty() {
@@ -21,7 +26,9 @@ function checkDifficulty() {
     const selectedDifficulty = savedDifficulty ?? 'facil';
     difficulties.forEach(difficulty => {
         const element = document.getElementById(difficulty.id);
+        const bombsInfo = document.getElementById("bombs-left");
         if (difficulty.id === selectedDifficulty) {
+            bombsInfo.innerText = difficulty.bombs
             element.classList.add('option-active');
             drawBoard(difficulty);
         }
@@ -43,7 +50,16 @@ function listenToDifficulty() {
     });
 }
 
+function listenToRestart() {
+    const element = document.getElementById("restart")
+    element.addEventListener("click", () => {
+        const response = window.confirm("Todo seu progresso será perdido. Deseja reiniciar?")
+        if (response) checkDifficulty();
+    });
+}
+
 function drawBoard(difficulty) {
+    clearTimer();
     const container = document.getElementById("board");
     container.replaceChildren();
     
@@ -90,6 +106,7 @@ function _drawHexBoard($hexRow, col, row) {
 }
 
 function mouseClickEvent(event) {
+    if (isGameRunning === false) startTimer();
     const $hexTile = $(event.currentTarget);
     switch (event.which) {
         case 1:
@@ -99,6 +116,23 @@ function mouseClickEvent(event) {
             toogleFlaggedHexTile($hexTile);
             break;
     }
+}
+
+function startTimer() {
+    isGameRunning = true;
+    const element = document.getElementById("timer");
+    let secs = 0;
+    timer = setInterval(() => {
+        secs += 1;
+        element.innerText = `${secs} (s)`
+    }, 1000)
+
+}
+
+function clearTimer() {
+    isGameRunning = false;
+    clearInterval(timer);
+    document.getElementById("timer").innerText = "0 (s)";
 }
 
 function selectHexTile($hexTile) {

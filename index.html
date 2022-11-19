@@ -15,14 +15,27 @@
     </head>
     <body>
         <div id="container">
-            <h1 class="title">Campo Minado</h1>
-            <div class="difficulty">
-                <span class="subtitle">Escolha sua Dificuldade</span>
-                <div class="options">
-                    <span class="option" id="facil">Fácil</span>
-                    <span class="option" id="media">Média</span>
-                    <span class="option" id="dificil">Difícil</span>
+            <div class="menu">
+                <h1 class="title">Campo Minado</h1>
+                <div class="difficulty">
+                    <span class="subtitle">Escolha sua Dificuldade</span>
+                    <div class="options">
+                        <span class="option" id="facil">Fácil</span>
+                        <span class="option" id="media">Média</span>
+                        <span class="option" id="dificil">Difícil</span>
+                    </div>
                 </div>
+                <div class="info">
+                    <div class="timer">
+                        <span>Timer: </span>
+                        <span id="timer">0 (s)</span>
+                    </div>
+                    <div class="bombs-left">
+                        <span>Bombas: </span>
+                        <span id="bombs-left"></span>
+                    </div>
+                </div>
+                <span id="restart">Reiniciar</span>
             </div>
             <div id="board">
             </div>
