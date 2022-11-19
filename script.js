@@ -6,7 +6,11 @@ const difficulties = [
 
 let board = [];
 
+let bombsArray = [];
+let bombsLeft;
+
 let isGameRunning = false;
+let isGameOver = false;
 
 let timer;
 
@@ -44,6 +48,9 @@ function listenToRestart() {
 }
 
 function startGame() {
+    $(".title").text("Campo Minado");
+    isGameRunning = false;
+    isGameOver = false;
     clearTimer();
     const difficulty = loadDifficulty();
     generateBoard(difficulty);
@@ -60,13 +67,11 @@ function loadDifficulty() {
         if (item.id === targetDifficulty) {
             difficulty = item;
             element$.addClass("option-active");
-
-            const bombsLeft$ = $("#bombs-left");
-            bombsLeft$.text(difficulty.bombs);
         } else {
             element$.removeClass("option-active");
         }
     });
+    setBombsLeft(difficulty.bombs);
 
     return difficulty;
 }
@@ -83,7 +88,6 @@ function generateBoard({ boardWidth, boardHeight, bombs }) {
             } else {
                 board[x][y] = {
                     value: 0,
-                    isFlagged: false,
                     isSelected: false,
                 };
             }
@@ -95,12 +99,16 @@ function generateBoard({ boardWidth, boardHeight, bombs }) {
 }
 
 function insertBombs(boardWidth, boardHeight, bombs) {
+    bombsArray = [];
     for (let i = 0; i < bombs; i++) {
         const x = Math.floor(Math.random() * boardHeight);
         const y = Math.floor(Math.random() * boardWidth);
 
         if (board[x][y] == null || board[x][y].value == "💣")  i--;
-        else board[x][y].value = "💣";
+        else {
+            bombsArray.push({ x, y });
+            board[x][y].value = "💣";
+        }
     }
 }
 
@@ -145,8 +153,6 @@ function drawBoard({ boardWidth, boardHeight }) {
 
             const $hexTop = $("<div></div>").addClass("top");
             const $hexMiddle = $("<div></div>").addClass("middle");
-            // TODO remover
-            $hexMiddle.text(board[x][y].value)
             const $hexBottom = $("<div></div>").addClass("bottom");
 
             $hex.append($hexTop, $hexMiddle, $hexBottom);
@@ -157,6 +163,7 @@ function drawBoard({ boardWidth, boardHeight }) {
 }
 
 function mouseClickEvent(event) {
+    if (isGameOver) return;
     if (isGameRunning === false) startTimer();
 
     const $hexTile = $(event.currentTarget);
@@ -176,14 +183,15 @@ function toggleFlag($hexTile) {
 
     const hasFlag = $hexTile.find(".middle").text() == "🚩";
     const { x, y } = getTileCoord($hexTile.attr("id"));
-    board[x][y].isFlagged = !hasFlag;
 
     if (hasFlag) {
         $hexTile.find(".middle").text("");
         $hexTile.children().removeClass("flagged");
+        setBombsLeft(++bombsLeft);
     } else {
         $hexTile.find(".middle").text("🚩");
         $hexTile.children().addClass("flagged");
+        setBombsLeft(--bombsLeft);
     }
 }
 
@@ -193,14 +201,50 @@ function handleSelection($hexTile) {
 
     const { x, y } = getTileCoord($hexTile.attr("id"));
     board[x][y].isSelected = true;
+    const isBomb = board[x][y].value == '💣';
 
-    $hexTile.children().addClass("selected");
     $hexTile.find(".middle").text(board[x][y].value);
 
-    if (board[x][y].value == '💣') gameOver();
+    if (isBomb) {
+        $hexTile.children().addClass("bomb");
+        revealBombs();
+        endGame("Voce perdeu!");
+    } else {
+        openNeighbors();
+        $hexTile.children().addClass("selected");
+        checkWin();
+    }
 }
 
-function gameOver() {
+function openNeighbors() {
+    // TODO funcao para abrir vizinhos
+}
+
+function endGame(message) {
+    isGameRunning = false;
+    isGameOver = true;
+    clearInterval(timer);
+    $(".title").text(message);
+}
+
+function checkWin() {
+    let allSelected = true;
+    board.forEach(row => {
+        row.forEach(item => {
+            if (!item || item.value == "💣") return;
+            if (!item.isSelected) allSelected = false;
+        })
+    });
+
+    if (allSelected) endGame("Voce ganhou!")
+}
+
+function revealBombs() {
+    bombsArray.forEach(({ x, y }) => {
+        const $hexTile = $(`#${x}-${y}`);
+        $hexTile.find(".middle").text(board[x][y]?.value);
+        $hexTile.children().addClass("bomb");
+    })
 }
 
 function getTileCoord(id) {
@@ -212,11 +256,10 @@ function getTileCoord(id) {
 
 function startTimer() {
     isGameRunning = true;
-    const element = document.getElementById("timer");
     let secs = 0;
     timer = setInterval(() => {
         secs += 1;
-        element.innerText = `${secs} (s)`
+        $("#timer").text(`${secs} (s)`);
     }, 1000)
 
 }
@@ -224,5 +267,10 @@ function startTimer() {
 function clearTimer() {
     isGameRunning = false;
     clearInterval(timer);
-    document.getElementById("timer").innerText = "0 (s)";
+    $("#timer").text("0 (s)");
+}
+
+function setBombsLeft(value) {
+    bombsLeft = value;
+    $("#bombs-left").text(bombsLeft);
 }

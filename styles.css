@@ -12,6 +12,7 @@ body {
 
     --color-primary: rgb(34, 87, 210);
     --color-selected: #fcae11;
+    --color-selected-bomb: #D0342C;
     --color-flagged: #444444;
 
     margin: 0px;
@@ -137,6 +138,10 @@ body {
     background-color: var(--color-selected);
 }
 
+.hex .middle.bomb {
+    background-color: var(--color-selected-bomb);
+}
+
 .hex .bottom, .hex .top {
     width: 0;
     border-left: var(--hex-half-width) solid transparent;
@@ -155,6 +160,10 @@ body {
     border-bottom-color: var(--color-selected);
 }
 
+.hex .top.bomb {
+    border-bottom-color: var(--color-selected-bomb);
+}
+
 .hex .bottom {
     border-top: var(--hex-half-height) solid var(--color-primary);
 }
@@ -165,6 +174,10 @@ body {
 
 .hex .bottom.selected {
     border-top-color: var(--color-selected);
+}
+
+.hex .bottom.bomb {
+    border-top-color: var(--color-selected-bomb);
 }
 
 .hex-row {
