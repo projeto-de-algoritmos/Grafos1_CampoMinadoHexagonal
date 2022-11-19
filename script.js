@@ -1,8 +1,10 @@
 const difficulties = [
-    { id: 'facil', boardWidth: 6, boardHeight: 5 },
-    { id: 'media', boardWidth: 10, boardHeight: 9 },
-    { id: 'dificil', boardWidth: 15, boardHeight: 13 },
+    { id: 'facil', boardWidth: 6, boardHeight: 5, bombs: 10 },
+    { id: 'media', boardWidth: 10, boardHeight: 9, bombs: 20 },
+    { id: 'dificil', boardWidth: 15, boardHeight: 13, bombs: 40 },
 ];
+
+let bombs = [];
 
 window.onload = () => {
     window.addEventListener("contextmenu", e => e.preventDefault());
@@ -43,7 +45,7 @@ function listenToDifficulty() {
 function drawBoard(difficulty) {
     const container = document.getElementById("board");
     container.replaceChildren();
-
+    
     for(let i = 0; i < difficulty.boardHeight; i++){
         const $hexRow = $("<div></div>").addClass("hex-row")
         let cont = difficulty.boardWidth;
@@ -51,10 +53,24 @@ function drawBoard(difficulty) {
             $hexRow.addClass("even");
             cont--;
         }
-
+        
         for(let j = 0; j < cont; j++) {
             _drawHexBoard($hexRow, j, i);
         }
+    }
+
+    bombs = [];
+    generateBombs(difficulty);
+}
+
+function generateBombs(difficulty) {
+    for(let i = 0; i < difficulty.bombs; i++) {
+        const y = Math.floor(Math.random() * difficulty.boardHeight);
+        const x = Math.floor(Math.random() * (difficulty.boardWidth + (y % 2 == 0 ? -1 : 0)));
+    
+        const $idTile = $(`div.hex#${y}-${x} .middle`);
+    
+        if($idTile.text() == "") $idTile.text("💣");
     }
 }
 
