@@ -104,7 +104,40 @@ function selectHexTile($hexTile) {
     const hasNoFlag = !($hexTile.find(".middle").text() == "🚩");
     if(hasNoFlag){
         $hexTile.children().addClass("selected");
+
+        const hasNoBomb = !($hexTile.find(".middle").text() == "💣");
+        if(hasNoBomb) {
+            $hexTile.find(".middle").text(getBombsNumber($hexTile));
+        }
     }
+}
+
+function getBombsNumber($hexTile) {
+    let cont = 0;
+    getNeighborsHexTile($hexTile).forEach((tile) => {
+        tile[0].innerText == "💣" && cont++;
+    });
+    return cont;
+}
+
+function getNeighborsHexTile($hexTile) {
+    const y = parseInt($hexTile[0].id.split("-")[0]);
+    const x = parseInt($hexTile[0].id.split("-")[1]);
+
+    let neighbors = [];
+    neighbors.push($(`#${y}-${x-1}`));
+    neighbors.push($(`#${y}-${x+1}`));
+    neighbors.push($(`#${y-1}-${x}`));
+    neighbors.push($(`#${y+1}-${x}`));
+    const diagonal = y % 2 === 0 ? 1 : -1;
+    neighbors.push($(`#${y-1}-${x+diagonal}`));
+    neighbors.push($(`#${y+1}-${x+diagonal}`));
+
+    let result = neighbors.filter(function (element) {
+        return element[0] != undefined;
+    });
+
+    return result;
 }
 
 function toogleFlaggedHexTile($hexTile) {
