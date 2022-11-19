@@ -33,6 +33,7 @@ function listenToDifficulty() {
     difficulties.forEach(difficulty => {
         const element = document.getElementById(difficulty.id)
         element.addEventListener("click", () => {
+            if (element.classList.contains("option-active")) return;
             const response = window.confirm("Alterar a dificuldade reinicia o jogo. Deseja prosseguir?")
             if (response) {
                 window.localStorage.setItem("difficulty", difficulty.id);
