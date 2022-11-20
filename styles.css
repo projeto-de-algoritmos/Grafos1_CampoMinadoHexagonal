@@ -15,6 +15,7 @@ body {
     --color-selected-bomb: #D0342C;
     --color-flagged: #444444;
 
+    user-select: none;
     margin: 0px;
     color: white;
     font-size: 22px;
@@ -42,7 +43,7 @@ body {
     font-size: 3rem;
 }
 
-.difficulty {
+.difficulty, .algorithm {
     display: flex;
     flex-direction: column;
     align-items: center;

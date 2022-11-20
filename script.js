@@ -9,6 +9,7 @@ window.onload = () => {
 function listenClickEvents() {
     listenDifficulty();
     listenRestart();
+    listenAlgorithm();
 }
 
 function listenDifficulty() {
@@ -30,3 +31,15 @@ function listenRestart() {
         if (response) game.start();
     });
 }
+
+function listenAlgorithm() {
+    const algorithm = window.localStorage.getItem("algorithm") ?? "BFS";
+    $(`.algorithm .option#${algorithm}`).addClass("option-active");
+
+    $(".algorithm .options").children().click((event) => {
+        $(".algorithm .options").children().removeClass("option-active");
+        $(event.target).addClass("option-active");
+        window.localStorage.setItem("algorithm", $(event.target)[0].id);
+    });
+}
+
