@@ -33,7 +33,10 @@ function listenRestart() {
 }
 
 function listenAlgorithm() {
-    const algorithm = window.localStorage.getItem("algorithm") ?? "BFS";
+    const fisrtAlgorithm = $(".algorithm .options").children().first()[0].id;
+    const algorithm = window.localStorage.getItem("algorithm") ?? fisrtAlgorithm;
+    window.localStorage.setItem("algorithm", algorithm);
+
     $(`.algorithm .option#${algorithm}`).addClass("option-active");
 
     $(".algorithm .options").children().click((event) => {

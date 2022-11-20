@@ -1,5 +1,6 @@
 import * as game from './game.js';
-import * as timer from './timer.js'
+import * as timer from './timer.js';
+import * as graph from './graph.js';
 
 export let boardMatrix = [];
 let bombsArray = [];
@@ -49,6 +50,16 @@ export function generate({ boardWidth, boardHeight, bombs }) {
     }
     _insertBombs(boardWidth, boardHeight, bombs);
     _updateNumbers(boardWidth, boardHeight);
+}
+
+export function selectTileByCord({x, y}) {
+    const $tile = $(`#${x}-${y}`);
+    $tile.children().addClass("selected");
+    boardMatrix[x][y].isSelected = true;
+
+    if(boardMatrix[x][y].value !== 0) {
+        $tile.find(".middle").text(boardMatrix[x][y].value);
+    }
 }
 
 function _mouseClickEvent(event) {
@@ -130,7 +141,11 @@ function _handleSelection($hexTile) {
     boardMatrix[x][y].isSelected = true;
     const isBomb = boardMatrix[x][y].value == '💣';
 
-    $hexTile.find(".middle").text(boardMatrix[x][y].value);
+    if(!!boardMatrix[x][y].value) {
+        $hexTile.find(".middle").text(boardMatrix[x][y].value);
+    }else{
+        _openZeroTiles({x, y});
+    }
 
     if (isBomb) {
         $hexTile.children().addClass("bomb");
@@ -155,4 +170,13 @@ function _revealBombs() {
         $hexTile.find(".middle").text(boardMatrix[x][y]?.value);
         $hexTile.children().addClass("bomb");
     })
+}
+
+function _openZeroTiles({x, y}) {
+    if(window.localStorage.getItem("algorithm") === "BFS") {
+        console.log("BFS")
+        graph.bfs(boardMatrix, {x, y});
+    }else if(window.localStorage.getItem("algorithm") === "DFS") {
+        graph.dfs(boardMatrix, {x, y});
+    }
 }
