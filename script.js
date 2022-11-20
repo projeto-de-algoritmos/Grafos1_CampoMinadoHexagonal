@@ -1,3 +1,5 @@
+import * as timer from './modules/timer.js';
+
 const difficulties = [
     { id: 'facil', boardWidth: 6, boardHeight: 5, bombs: 8 },
     { id: 'media', boardWidth: 10, boardHeight: 9, bombs: 17 },
@@ -9,10 +11,7 @@ let board = [];
 let bombsArray = [];
 let bombsLeft;
 
-let isGameRunning = false;
 let isGameOver = false;
-
-let timer;
 
 window.onload = () => {
     window.addEventListener("contextmenu", e => e.preventDefault());
@@ -51,7 +50,7 @@ function startGame() {
     $(".title").text("Campo Minado");
     isGameRunning = false;
     isGameOver = false;
-    clearTimer();
+    timer.clear();
     const difficulty = loadDifficulty();
     generateBoard(difficulty);
     drawBoard(difficulty);
@@ -79,10 +78,10 @@ function loadDifficulty() {
 function generateBoard({ boardWidth, boardHeight, bombs }) {
     board = [];
 
-    for (x = 0; x < boardHeight; x++) {
+    for(let x = 0; x < boardHeight; x++) {
         if (!board[x]) board[x] = []
 
-        for (y = 0; y < boardWidth; y++) {
+        for (let y = 0; y < boardWidth; y++) {
             if (x % 2 == 0 && y == boardWidth - 1) {
                 board[x][y] = null;
             } else {
@@ -113,8 +112,8 @@ function insertBombs(boardWidth, boardHeight, bombs) {
 }
 
 function updateNumbers(boardWidth, boardHeight) {
-    for (x = 0; x < boardHeight; x++) {
-        for (y = 0; y < boardWidth; y++) {
+    for (let x = 0; x < boardHeight; x++) {
+        for (let y = 0; y < boardWidth; y++) {
             if (board[x][y]?.value == "💣") {
                 const modifier = x % 2 != 0 ? -1 : 0
                 setNumber(x, y - 1);
@@ -141,11 +140,11 @@ function drawBoard({ boardWidth, boardHeight }) {
     const container = document.getElementById("board");
     container.replaceChildren();
 
-    for (x = 0; x < boardHeight; x++) {
+    for(let x = 0; x < boardHeight; x++) {
         const $hexRow = $("<div></div>").addClass("hex-row")
         if(x % 2 == 0) $hexRow.addClass("even");
 
-        for (y = 0; y < boardWidth; y++) {
+        for(let y = 0; y < boardWidth; y++) {
             if (board[x][y] == null) continue;
             const $hex = $("<div></div>").attr("id", `${x}-${y}`);
             $hex.addClass("hex");
@@ -164,7 +163,7 @@ function drawBoard({ boardWidth, boardHeight }) {
 
 function mouseClickEvent(event) {
     if (isGameOver) return;
-    if (isGameRunning === false) startTimer();
+    if (timer.isRunning === false) timer.start();
 
     const $hexTile = $(event.currentTarget);
     switch (event.which) {
@@ -221,9 +220,8 @@ function openNeighbors() {
 }
 
 function endGame(message) {
-    isGameRunning = false;
     isGameOver = true;
-    clearInterval(timer);
+    timer.clear();
     $(".title").text(message);
 }
 
@@ -252,22 +250,6 @@ function getTileCoord(id) {
     const x = coordArray[0];
     const y = coordArray[1];
     return { x, y }
-}
-
-function startTimer() {
-    isGameRunning = true;
-    let secs = 0;
-    timer = setInterval(() => {
-        secs += 1;
-        $("#timer").text(`${secs} (s)`);
-    }, 1000)
-
-}
-
-function clearTimer() {
-    isGameRunning = false;
-    clearInterval(timer);
-    $("#timer").text("0 (s)");
 }
 
 function setBombsLeft(value) {
