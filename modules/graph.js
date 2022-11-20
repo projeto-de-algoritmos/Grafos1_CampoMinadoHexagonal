@@ -14,8 +14,8 @@ export function bfs(matrix, {x, y}) {
         queue[queueTail] = item;
         queueTail++;
     }
-    
-    function daqueue() {
+
+    function dequeue() {
         const item = queue[queueHead];
         delete queue[queueHead];
         queueHead++;
@@ -32,7 +32,7 @@ export function bfs(matrix, {x, y}) {
                 && matrix[x][y]?.isSelected === false
             ) neighbors.push({x, y});
         };
-        
+
         const modifier = x % 2 === 0 ? 1 : -1;
         push(x, y-1)
         push(x, y+1)
@@ -40,12 +40,12 @@ export function bfs(matrix, {x, y}) {
         push(x+1, y+modifier)
         push(x-1, y)
         push(x-1, y+modifier)
-    
+
         return neighbors;
     }
 
     for(let i = queueHead; i < queueTail; i++) {
-        getNodesNotSelected(daqueue()).forEach((node) => {
+        getNodesNotSelected(dequeue()).forEach((node) => {
             selectNode(node);
             if(matrix[node.x][node.y]?.value === 0) enqueue(node);
         });

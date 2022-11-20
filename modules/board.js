@@ -172,11 +172,14 @@ function _revealBombs() {
     })
 }
 
-function _openZeroTiles({x, y}) {
-    if(window.localStorage.getItem("algorithm") === "BFS") {
-        console.log("BFS")
-        graph.bfs(boardMatrix, {x, y});
-    }else if(window.localStorage.getItem("algorithm") === "DFS") {
-        graph.dfs(boardMatrix, {x, y});
+function _openZeroTiles({ x, y }) {
+    const algorithm = window.localStorage.getItem("algorithm");
+    switch (algorithm) {
+        case "DFS":
+            graph.dfs(boardMatrix, {x, y});
+            break;
+        default:
+            graph.bfs(boardMatrix, {x, y});
+            break;
     }
 }
