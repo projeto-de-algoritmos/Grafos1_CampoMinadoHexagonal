@@ -11,8 +11,11 @@ export function start() {
 
 }
 
-export function clear() {
+export function stop() {
     isRunning = false;
     clearInterval(timer);
+}
+
+export function clear() {
     $("#timer").text("0 (s)");
 }
