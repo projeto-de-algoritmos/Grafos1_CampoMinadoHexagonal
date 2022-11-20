@@ -5,8 +5,8 @@ export let isGameOver = false;
 export let bombsLeft;
 
 const difficulties = [
-    { id: 'esay', boardWidth: 6, boardHeight: 5, bombs: 8 },
-    { id: 'normal', boardWidth: 10, boardHeight: 9, bombs: 17 },
+    { id: 'easy', boardWidth: 6, boardHeight: 5, bombs: 6 },
+    { id: 'normal', boardWidth: 10, boardHeight: 9, bombs: 14 },
     { id: 'hard', boardWidth: 15, boardHeight: 13, bombs: 40 },
 ];
 
@@ -14,7 +14,7 @@ export function start() {
     $(".title").text("Campo Minado");
     isGameOver = false;
     timer.clear();
-    
+
     const difficulty = _loadDifficulty();
     setBombsLeft(difficulty.bombs);
     board.generate(difficulty);
@@ -45,8 +45,8 @@ export function end(message) {
 }
 
 function _loadDifficulty() {
-    const targetDifficulty = window.localStorage.getItem("difficulty");
-    let difficulty = difficulties[0];
+    const targetDifficulty = window.localStorage.getItem("difficulty") || difficulties[0].id;
+    let difficulty;
 
     difficulties.forEach(item => {
         const $option = $(`#${item.id}`);
