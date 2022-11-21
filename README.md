@@ -10,22 +10,26 @@
 | 180122258 | [Igor Queiroz Lima](https://github.com/igorq937)            |
 
 ## Sobre
-Descreva os objetivos do seu projeto e como ele funciona. 
+O projeto consiste em uma variação do jogo campo minado no qual o tabuleiro é formado por hexágonos.
 
 ## Screenshots
-Adicione 3 ou mais screenshots do projeto em funcionamento.
+![screenshot01](/screenshots/screenshot01.png)
+![screenshot02](/screenshots/screenshot02.png)
+![screenshot03](/screenshots/screenshot03.png)
 
 ## Instalação
 **Linguagem**: Javascript<br>
 **Framework**: JQuery (biblioteca)<br>
-Descreva os pré-requisitos para rodar o seu projeto e os comandos necessários.
+Pode ser executado utilizando a extensão [Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) do VSCode ou utilizando [http-server](https://github.com/http-party/http-server) que pode ser instalado com o comando ```npm install --global http-server```.
 
 ## Uso
-Explique como usar seu projeto caso haja algum passo a passo após o comando de execução.
+Para jogar sem nenhuma instalação acesse https://projeto-de-algoritmos.github.io/Grafos1_CampoMinadoHexagonal/;
+
+Caso deseje usar a exetensão Live Server do VSCode, abra o arquivo ```index.html``` com a extensão;
+
+Caso deseje usar http-server, basta utilizar o comando no diretório root do projeto ```http-server```.
+
+***OBS:*** Utilizar apenas o navegador e executar o index.html não funcionará!
 
 ## Outros
-Quaisquer outras informações sobre seu projeto podem ser descritas abaixo.
-
-
-
-
+Tabuleiro baseado no site http://jtauber.github.io/articles/css-hexagon.html
