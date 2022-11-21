@@ -54,5 +54,25 @@ export function bfs(matrix, {x, y}) {
 }
 
 export function dfs(matrix, {x, y}) {
+    x = parseInt(x);
+    y = parseInt(y);
 
+    if (
+        x < 0 || x >= matrix.length ||
+        y < 0 || y >= matrix[0].length ||
+        matrix[x][y] == null || matrix[x][y].seen
+    ) return;
+
+    matrix[x][y].seen = true;
+    selectNode({ x, y });
+
+    if (matrix[x][y].value > 0) return;
+
+    const modifier = x % 2 != 0 ? -1 : 0
+    dfs(matrix, {x, y: y - 1});
+    dfs(matrix, {x, y: y + 1});
+    dfs(matrix, {x: x - 1, y: y + modifier});
+    dfs(matrix, {x: x - 1, y: y + 1 + modifier});
+    dfs(matrix, {x: x + 1, y: y + modifier});
+    dfs(matrix, {x: x + 1, y: y + 1 + modifier});
 }
