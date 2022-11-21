@@ -54,6 +54,7 @@ export function generate({ boardWidth, boardHeight, bombs }) {
 
 export function selectTileByCord({x, y}) {
     const $tile = $(`#${x}-${y}`);
+    _removeFlag($tile);
     $tile.children().addClass("selected");
     boardMatrix[x][y].isSelected = true;
 
@@ -130,6 +131,15 @@ function _toggleFlag($hexTile) {
         $hexTile.find(".middle").text("🚩");
         $hexTile.children().addClass("flagged");
         game.setBombsLeft(game.bombsLeft-1);
+    }
+}
+
+function _removeFlag($hexTile) {
+    const hasFlag = $hexTile.find(".middle").text() == "🚩";
+    if (hasFlag) {
+        $hexTile.find(".middle").text("");
+        $hexTile.children().removeClass("flagged");
+        game.setBombsLeft(game.bombsLeft+1);
     }
 }
 
