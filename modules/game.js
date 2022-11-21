@@ -5,9 +5,9 @@ export let isGameOver = false;
 export let bombsLeft;
 
 const difficulties = [
-    { id: 'easy', boardWidth: 6, boardHeight: 5, bombs: 6 },
-    { id: 'normal', boardWidth: 10, boardHeight: 9, bombs: 14 },
-    { id: 'hard', boardWidth: 15, boardHeight: 13, bombs: 40 },
+    { id: 'easy', boardWidth: 6, boardHeight: 5, bombs: 6, hexWidth: 45, hexHeight: 26, fontSize: 1.35 },
+    { id: 'normal', boardWidth: 10, boardHeight: 9, bombs: 14, hexWidth: 40, hexHeight: 23, fontSize:   1.2 },
+    { id: 'hard', boardWidth: 15, boardHeight: 13, bombs: 35, hexWidth: 36, hexHeight: 20, fontSize: 1.1 },
 ];
 
 export function start() {
@@ -54,6 +54,9 @@ function _loadDifficulty() {
         if (item.id === targetDifficulty) {
             difficulty = item;
             $option.addClass("option-active");
+            $("body").css("--hex-width", `${difficulty.hexWidth}px`);
+            $("body").css("--hex-height", `${difficulty.hexHeight}px`);
+            $("body").css("--hex-font-size", `${difficulty.fontSize}rem`)
         } else {
             $option.removeClass("option-active");
         }
