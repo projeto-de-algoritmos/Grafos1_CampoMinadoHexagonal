@@ -10,7 +10,7 @@
 | 180122258 | [Igor Queiroz Lima](https://github.com/igorq937)            |
 
 ## Sobre
-O projeto consiste em uma variação do jogo campo minado no qual o tabuleiro é formado por hexágonos.
+O projeto consiste em uma variação do jogo campo minado no qual o tabuleiro é formado por hexágonos. Para entender melhor está disponível no repositório nossa [apresentação](./video.mp4).
 
 ## Screenshots
 ![screenshot01](/screenshots/screenshot01.png)
@@ -32,4 +32,4 @@ Caso deseje usar http-server, basta utilizar o comando no diretório root do pro
 ***OBS:*** Utilizar apenas o navegador e executar o index.html não funcionará!
 
 ## Outros
-Tabuleiro baseado no site http://jtauber.github.io/articles/css-hexagon.html
+Tabuleiro foi baseado pela página: http://jtauber.github.io/articles/css-hexagon.html
